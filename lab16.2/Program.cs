@@ -16,24 +16,24 @@ namespace lab16._2
         static void Main(string[] args)
         {
             string path = "Products.json";
-            string jsonString = "";
             double maxprice = 0;
-            
+            string goodName = "";
+            Goods good = new Goods(0,"",0);
+
             using (StreamReader sr = new StreamReader(path))
             {
-                jsonString = sr.ReadToEnd();
-            }
-            
-            Goods good = JsonSerializer.Deserialize<Goods>(jsonString); //не могу понять как из json файла достать полноценный массив, с которым можно потом работать
-
-            /*for (int i = 0; i < good.Length; i++)
-            {
-                if (maxprice < good.price)
+                for (int i = 0; i < 5; i++)
                 {
-                    maxprice = good.price;
+                    string line = sr.ReadLine();
+                    good = JsonSerializer.Deserialize<Goods>(line);
+                    if (maxprice<good.Price)
+                    {
+                        maxprice = good.Price;
+                        goodName = good.Name;
+                    }                                      
                 }
-            }*/
-            Console.WriteLine(maxprice);
+            }
+            Console.WriteLine("Самый дорогой товар в списке - {0}",goodName);
             Console.ReadKey();
         }
     }

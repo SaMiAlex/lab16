@@ -18,7 +18,7 @@ namespace lab16
             string path = "Products.json";
             Console.WriteLine("Введите количество товаров");
             int n = Convert.ToInt32(Console.ReadLine());
-            Goods[] goodsarray = new Goods [n];
+            Goods[] goodsarray = new Goods[n];
             if (!File.Exists(path))//создаем файл
             {
                 File.Create(path);
@@ -26,17 +26,16 @@ namespace lab16
             JsonSerializerOptions options = new JsonSerializerOptions()
             {
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Cyrillic),
-                WriteIndented = true
+                //WriteIndented=true
             };
-            for (int i = 0; i < n; i++)//наполняем массив
-            {
-                Goods good = new Goods();
-                goodsarray[i] = good;
-            }
             using (StreamWriter sw = new StreamWriter(path))//пишем массив в файл
             {
-                string jsonString = JsonSerializer.Serialize(goodsarray, options);
-                sw.WriteLine(jsonString);
+                for (int i = 0; i < n; i++)//наполняем массив
+                {
+                    goodsarray[i] = new Goods();
+                    string jsonString = JsonSerializer.Serialize(goodsarray[i], options);
+                    sw.WriteLine(jsonString);
+                }                
             }
             Console.ReadKey();
         }
